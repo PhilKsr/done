@@ -1,10 +1,29 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import { useState } from "react";
+import InputField from "../components/InputField";
+import TodoList from "../components/TodoList";
+import { Todo } from "../lib/model";
 
 const Home: NextPage = () => {
-  return <div className={styles.container}>Welcome!</div>;
+  const [todo, setTodo] = useState<string>("");
+
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+      setTodo("");
+    }
+  };
+
+  return (
+    <div className='container flex flex-col items-center h-screen w-screen'>
+      <h1>DONE</h1>
+      <InputField todo={todo} setTodo={setTodo} onHandleAdd={handleAdd} />
+      <TodoList todos={todos} onSetTodos={setTodos} />
+    </div>
+  );
 };
 
 export default Home;
