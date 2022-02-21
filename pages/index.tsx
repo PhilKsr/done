@@ -49,8 +49,10 @@ const Home: NextPage = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className='container flex flex-col items-center h-screen w-screen'>
-        <h1>DONE</h1>
+      <div className='flex flex-col items-center  '>
+        <h1 className='text-6xl xl:text-9xl font-bold text m-8 text-slate-700'>
+          DONE.
+        </h1>
         <InputField todo={todo} setTodo={setTodo} onHandleAdd={handleAdd} />
         <TodoList
           todos={todos}
