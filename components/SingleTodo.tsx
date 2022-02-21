@@ -46,13 +46,16 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided, snapshot) => (
         <form
-          className={`${snapshot.isDragging ? "drag" : ""}`}
+          className={`${
+            snapshot.isDragging ? "drag" : ""
+          } flex justify-between mt-3`}
           onSubmit={(e) => handleEdit(e, todo.id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}>
           {edit ? (
             <input
+              className=' min-w-min w-2/3'
               ref={inputRef}
               type='text'
               value={editTodo}
@@ -63,8 +66,9 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
           ) : (
             <span>{todo.todo}</span>
           )}
-          <div>
+          <div className='flex '>
             <span
+              className='mr-2'
               onClick={() => {
                 if (!edit && !todo.isDone) {
                   setEdit(!edit);
@@ -72,7 +76,7 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
               }}>
               <AiFillEdit />
             </span>
-            <span>
+            <span className='mr-2'>
               <AiFillDelete onClick={() => handleDelete(todo.id)} />
             </span>
             <span onClick={() => handleDone(todo.id)}>
