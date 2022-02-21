@@ -10,7 +10,8 @@ interface Props {
 
 const TodoList = ({ todos, onSetTodos }: Props) => {
   return (
-    <div className='flex flex-wrap w-min-max xl:w-2/5 justify-around group '>
+    //Add right width here (concerning on input)
+    <div className='flex flex-wrap xl:w-2/5 justify-around group '>
       <Droppable droppableId='TodosList'>
         {(provided, snapshot) => (
           <div
