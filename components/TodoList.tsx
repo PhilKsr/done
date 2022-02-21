@@ -10,11 +10,13 @@ interface Props {
 
 const TodoList = ({ todos, onSetTodos }: Props) => {
   return (
-    <div>
+    <div className='flex flex-wrap xl:w-2/5 justify-around group'>
       <Droppable droppableId='TodosList'>
         {(provided, snapshot) => (
           <div
-            className={`${snapshot.isDraggingOver ? "dragactive" : ""}`}
+            className={`${
+              snapshot.isDraggingOver ? "dragactive" : ""
+            } p-5 m-4 bg-green-400 rounded-xl hover:scale-105 hover:bg-green-300`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
             <span>Active Tasks</span>
@@ -34,7 +36,9 @@ const TodoList = ({ todos, onSetTodos }: Props) => {
       <Droppable droppableId='TodosDone'>
         {(provided, snapshot) => (
           <div
-            className={`${snapshot.isDraggingOver ? "dragcomplete" : ""}`}
+            className={`${
+              snapshot.isDraggingOver ? "dragcomplete" : ""
+            } p-5 m-4 bg-red-400 rounded-xl hover:scale-105 hover:bg-red-300`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
             <span>Done Tasks</span>
