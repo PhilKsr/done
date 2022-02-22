@@ -10,7 +10,7 @@ const InputField = ({ todo, setTodo, onHandleAdd }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <form
-      className='flex relative items-center'
+      className='flex relative items-center w-full md:w-3/5 xl:w-2/5 mt-8 xl:mt-40'
       onSubmit={(e) => {
         onHandleAdd(e);
         inputRef.current?.blur();
@@ -19,11 +19,13 @@ const InputField = ({ todo, setTodo, onHandleAdd }: Props) => {
         ref={inputRef}
         type='text'
         placeholder='Enter a task'
-        className='w-12/12 px-4 py-8 duration-200 shadow-inner input__box'
+        className='w-full px-6 py-3 m-4 duration-200 shadow-inner shadow-slate-400 rounded-xl focus:outline-none'
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
       />
-      <button type='submit' className='active:scale-50'>
+      <button
+        type='submit'
+        className='p-3 active:scale-90 absolute right-0 mr-5'>
         Go
       </button>
     </form>

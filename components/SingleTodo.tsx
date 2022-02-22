@@ -2,7 +2,6 @@ import { FormEvent, SetStateAction, useEffect, useRef, useState } from "react";
 import { Todo } from "../lib/model";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
-import TodoList from "./TodoList";
 import { Draggable } from "react-beautiful-dnd";
 
 interface Props {
@@ -46,25 +45,31 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
     <Draggable draggableId={todo.id.toString()} index={index}>
       {(provided, snapshot) => (
         <form
-          className={`${snapshot.isDragging ? "drag" : ""}`}
+          className={`${
+            snapshot.isDragging ? "shadow-lg" : ""
+          } flex w-full p-4 mt-4 bg-white rounded-lg justify-between hover:scale-105 hover:shadow-lg`}
           onSubmit={(e) => handleEdit(e, todo.id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}>
           {edit ? (
             <input
+              className='focus:outline-none p-1 border-none w-2/3 relative items-center ease-in-out duration-200'
               ref={inputRef}
               type='text'
               value={editTodo}
               onChange={(e) => setEditTodo(e.target.value)}
             />
           ) : todo.isDone ? (
-            <span className='line-through'>{todo.todo}</span>
+            <span className='line-through focus:outline-none p-1 border-none'>
+              {todo.todo}
+            </span>
           ) : (
             <span>{todo.todo}</span>
           )}
-          <div>
+          <div className=' focus:outline-none flex p-1 border-none justify-end'>
             <span
+              className='ml-2 cursor-pointer'
               onClick={() => {
                 if (!edit && !todo.isDone) {
                   setEdit(!edit);
@@ -72,10 +77,12 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
               }}>
               <AiFillEdit />
             </span>
-            <span>
+            <span className='ml-2 cursor-pointer'>
               <AiFillDelete onClick={() => handleDelete(todo.id)} />
             </span>
-            <span onClick={() => handleDone(todo.id)}>
+            <span
+              className='ml-2 cursor-pointer'
+              onClick={() => handleDone(todo.id)}>
               <MdDone />
             </span>
           </div>
