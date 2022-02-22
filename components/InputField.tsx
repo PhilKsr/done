@@ -18,14 +18,14 @@ const InputField = ({ todo, setTodo, onHandleAdd }: Props) => {
       <input
         ref={inputRef}
         type='text'
-        placeholder='Enter a task'
+        placeholder='Get your things done'
         className='w-full px-6 py-3 m-4 duration-200 shadow-inner shadow-slate-400 rounded-xl focus:outline-none'
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
       />
       <button
         type='submit'
-        className='p-3 active:scale-90 absolute right-0 mr-5'>
+        className='py-2 px-3 active:scale-90 absolute right-0 mr-5 bg-slate-400 dark:bg-slate-700 dark:text-white rounded-full'>
         Go
       </button>
     </form>
