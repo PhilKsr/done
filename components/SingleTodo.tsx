@@ -47,7 +47,7 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
         <form
           className={`${
             snapshot.isDragging ? "shadow-lg" : ""
-          } flex w-full p-4 mt-4 bg-white rounded-lg justify-between hover:scale-105 hover:shadow-lg`}
+          } flex self-center w-11/12 p-4 mt-4 bg-white rounded-lg justify-between hover:scale-105 hover:shadow-lg`}
           onSubmit={(e) => handleEdit(e, todo.id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

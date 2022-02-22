@@ -22,7 +22,7 @@ const TodoList = ({
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "bg-green-400" : ""
+              snapshot.isDraggingOver ? "hover:bg-green-400" : ""
             } flex flex-col p-5 m-4 bg-green-300 rounded-lg min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
@@ -33,7 +33,7 @@ const TodoList = ({
                 key={t.id}
                 todo={t}
                 todos={todos}
-                onSetTodos={onSetCompletedTodos}
+                onSetTodos={onSetTodos}
               />
             ))}
             {provided.placeholder}
@@ -44,8 +44,8 @@ const TodoList = ({
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "bg-red-400" : ""
-            } p-5 m-4 bg-red-300 rounded-xl min-w-0 xl:w-11/12 text-center`}
+              snapshot.isDraggingOver ? "hover:bg-red-400" : ""
+            } flex flex-col p-5 m-4 bg-red-300 rounded-xl min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
             <span>Done Tasks</span>
