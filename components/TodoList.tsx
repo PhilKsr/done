@@ -22,11 +22,13 @@ const TodoList = ({
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "hover:bg-green-400" : ""
+              snapshot.isDraggingOver
+                ? "hover:bg-green-400 dark:hover:bg-green-200"
+                : ""
             } flex flex-col p-5 m-4 bg-green-300 rounded-lg min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
-            <span>Active Tasks</span>
+            <span>ACTIVE</span>
             {todos.map((t, index) => (
               <SingleTodo
                 index={index}
@@ -44,11 +46,13 @@ const TodoList = ({
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "hover:bg-red-400" : ""
+              snapshot.isDraggingOver
+                ? "hover:bg-red-400 dark:hover:bg-red-200"
+                : ""
             } flex flex-col p-5 m-4 bg-red-300 rounded-xl min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
-            <span>Done Tasks</span>
+            <span>DONE</span>
             {completedTodos.map((t, index) => (
               <SingleTodo
                 index={index}

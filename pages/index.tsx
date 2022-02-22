@@ -2,9 +2,11 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import InputField from "../components/InputField";
 import TodoList from "../components/TodoList";
+import ModeToggle from "../components/ModeToggle";
+import Background from "../components/Background";
 import { Todo } from "../lib/model";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { ThemeProvider } from "./components/ThemeContext";
+import { ThemeProvider } from "../themes/mode";
 
 const Home: NextPage = () => {
   const [todo, setTodo] = useState<string>("");
@@ -49,22 +51,25 @@ const Home: NextPage = () => {
   };
 
   return (
-    <ThemeProvider>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className='w-full flex flex-col items-center  '>
-          <h1 className=' text-6xl xl:text-9xl font-bold m-8 xl:m-24 text-slate-700'>
-            DONE.
-          </h1>
-          <InputField todo={todo} setTodo={setTodo} onHandleAdd={handleAdd} />
-          <TodoList
-            todos={todos}
-            onSetTodos={setTodos}
-            completedTodos={completedTodos}
-            onSetCompletedTodos={setCompletedTodos}
-          />
-        </div>
-      </DragDropContext>
-    </ThemeProvider>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <ThemeProvider>
+        <Background>
+          <div className='w-full flex flex-col items-center  '>
+            <h1 className=' text-6xl xl:text-9xl font-bold m-8 xl:m-24 text-slate-700 dark:text-white'>
+              DONE.
+            </h1>
+            <ModeToggle />
+            <InputField todo={todo} setTodo={setTodo} onHandleAdd={handleAdd} />
+            <TodoList
+              todos={todos}
+              onSetTodos={setTodos}
+              completedTodos={completedTodos}
+              onSetCompletedTodos={setCompletedTodos}
+            />
+          </div>
+        </Background>
+      </ThemeProvider>
+    </DragDropContext>
   );
 };
 

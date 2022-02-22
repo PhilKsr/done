@@ -47,14 +47,14 @@ const SingleTodo = ({ index, todo, todos, onSetTodos }: Props) => {
         <form
           className={`${
             snapshot.isDragging ? "shadow-lg" : ""
-          } flex self-center w-11/12 p-4 mt-4 bg-white rounded-lg justify-between hover:scale-105 hover:shadow-lg`}
+          } flex self-center w-11/12 p-4 mt-4 bg-white dark:bg-slate-700 dark:text-white rounded-lg justify-between hover:scale-105 hover:shadow-lg`}
           onSubmit={(e) => handleEdit(e, todo.id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}>
           {edit ? (
             <input
-              className='focus:outline-none p-1 border-none w-2/3 relative items-center ease-in-out duration-200'
+              className='focus:outline-none active:outline-none  p-1 border-none w-2/3 relative items-center ease-in-out duration-200 dark:bg-slate-700'
               ref={inputRef}
               type='text'
               value={editTodo}
