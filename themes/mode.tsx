@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 
-const ThemeContext = createContext();
+const ThemeContext = createContext<any>("");
 
 import React from "react";
 
@@ -21,9 +21,9 @@ const getInitialTheme = () => {
 };
 
 const ThemeProvider = ({ initialTheme, children }: any) => {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState<string>(getInitialTheme);
 
-  const rawSetTheme = (rawTheme) => {
+  const rawSetTheme = (rawTheme: string) => {
     const root = window.document.documentElement;
     const isDark = rawTheme === "dark";
 
