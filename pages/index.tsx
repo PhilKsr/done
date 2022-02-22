@@ -54,7 +54,7 @@ const Home: NextPage = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <ThemeProvider>
         <Background>
-          <div className='w-full flex flex-col items-center  '>
+          <div className='w-full flex flex-col items-center selection:text-orange-400 dark:selection:text-teal-300 '>
             <h1 className=' text-6xl xl:text-9xl font-bold m-8 xl:m-24 text-slate-700 dark:text-white'>
               DONE.
             </h1>
