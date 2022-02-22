@@ -25,7 +25,7 @@ const InputField = ({ todo, setTodo, onHandleAdd }: Props) => {
       />
       <button
         type='submit'
-        className='py-2 px-3 active:scale-90 absolute right-0 mr-5 bg-slate-400 dark:bg-slate-700 rounded-full'>
+        className='py-2 px-3 active:scale-90 absolute right-0 mr-5 bg-slate-400 dark:bg-slate-700 dark:text-white rounded-full'>
         Go
       </button>
     </form>
