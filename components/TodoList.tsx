@@ -6,18 +6,24 @@ import SingleTodo from "./SingleTodo";
 interface Props {
   todos: Todo[];
   onSetTodos: React.Dispatch<SetStateAction<Todo[]>>;
+  completedTodos: Todo[];
+  onSetCompletedTodos: React.Dispatch<SetStateAction<Todo[]>>;
 }
 
-const TodoList = ({ todos, onSetTodos }: Props) => {
+const TodoList = ({
+  todos,
+  onSetTodos,
+  completedTodos,
+  onSetCompletedTodos,
+}: Props) => {
   return (
-    //Add right width here (concerning on input)
-    <div className='flex flex-wrap xl:w-2/5 justify-around group '>
+    <div className='flex flex-col xl:flex-row min-w-0 w-2/3 xl:w-11/12 justify-evenly group '>
       <Droppable droppableId='TodosList'>
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "dragactive" : ""
-            } p-5 m-4 bg-green-400 rounded-xl hover:scale-105 hover:bg-green-300 w-2/5 text-center`}
+              snapshot.isDraggingOver ? "bg-green-400" : ""
+            } flex flex-col p-5 m-4 bg-green-300 rounded-lg min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
             <span>Active Tasks</span>
@@ -27,7 +33,7 @@ const TodoList = ({ todos, onSetTodos }: Props) => {
                 key={t.id}
                 todo={t}
                 todos={todos}
-                onSetTodos={onSetTodos}
+                onSetTodos={onSetCompletedTodos}
               />
             ))}
             {provided.placeholder}
@@ -38,18 +44,18 @@ const TodoList = ({ todos, onSetTodos }: Props) => {
         {(provided, snapshot) => (
           <div
             className={`${
-              snapshot.isDraggingOver ? "dragcomplete" : ""
-            } p-5 m-4 bg-red-400 rounded-xl hover:scale-105 hover:bg-red-300 w-2/5 text-center`}
+              snapshot.isDraggingOver ? "bg-red-400" : ""
+            } p-5 m-4 bg-red-300 rounded-xl min-w-0 xl:w-11/12 text-center`}
             ref={provided.innerRef}
             {...provided.droppableProps}>
             <span>Done Tasks</span>
-            {todos.map((t, index) => (
+            {completedTodos.map((t, index) => (
               <SingleTodo
                 index={index}
                 key={t.id}
                 todo={t}
-                todos={todos}
-                onSetTodos={onSetTodos}
+                todos={completedTodos}
+                onSetTodos={onSetCompletedTodos}
               />
             ))}
             {provided.placeholder}

@@ -10,7 +10,7 @@ const InputField = ({ todo, setTodo, onHandleAdd }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <form
-      className='flex relative items-center w-full md:w-3/5 xl:w-2/5'
+      className='flex relative items-center w-full md:w-3/5 xl:w-2/5 mt-8 xl:mt-40'
       onSubmit={(e) => {
         onHandleAdd(e);
         inputRef.current?.blur();
