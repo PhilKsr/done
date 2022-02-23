@@ -1,17 +1,23 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../components/InputField";
 import TodoList from "../components/TodoList";
 import ModeToggle from "../components/ModeToggle";
 import Background from "../components/Background";
-import { Todo } from "../lib/model";
+import { Todo } from "../types/Todo";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { ThemeProvider } from "../themes/mode";
+import useLocalStorage from "../lib/useLocalStorage";
 
 const Home: NextPage = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
+
+  const [storedValue, setValue] = useLocalStorage<Todo[]>("_Todos", []);
+
+  useEffect(() => setTodos(storedValue), []);
+  useEffect(() => setValue(todos), [todos]);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
