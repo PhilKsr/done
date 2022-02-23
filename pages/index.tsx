@@ -14,10 +14,16 @@ const Home: NextPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
 
-  const [storedValue, setValue] = useLocalStorage<Todo[]>("_Todos", []);
+  const [storedTodos, setStoredTodos] = useLocalStorage<Todo[]>("_Todos", []);
+  useEffect(() => setTodos(storedTodos), []);
+  useEffect(() => setStoredTodos(todos), [todos]);
 
-  useEffect(() => setTodos(storedValue), []);
-  useEffect(() => setValue(todos), [todos]);
+  const [storedCompleted, setStoredCompleted] = useLocalStorage<Todo[]>(
+    "_CompletedTodos",
+    []
+  );
+  useEffect(() => setTodos(storedCompleted), []);
+  useEffect(() => setStoredCompleted(completedTodos), [completedTodos]);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +35,7 @@ const Home: NextPage = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
+
     if (!destination) return;
     if (
       destination.droppableId === source.droppableId &&
