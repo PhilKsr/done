@@ -1,8 +1,8 @@
 import { FormEvent, SetStateAction, useEffect, useRef, useState } from "react";
-import { Todo } from "../lib/model";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import { Draggable } from "react-beautiful-dnd";
+import Todo from "../types/Todo";
 
 interface Props {
   index: number;
