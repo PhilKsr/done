@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { Droppable } from "react-beautiful-dnd";
-import { Todo } from "../lib/model";
+import Todo from "../types/Todo";
 import SingleTodo from "./SingleTodo";
 
 interface Props {

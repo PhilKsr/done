@@ -9,10 +9,7 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { ThemeProvider } from "../themes/mode";
 import useLocalStorage from "../lib/useLocalStorage";
 
-const Home: NextPage = () => {
-  const [client, setClient] = useState(false);
-  useEffect(() => setClient(true), []);
-
+const Home: any = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
@@ -20,6 +17,9 @@ const Home: NextPage = () => {
   const [storedTodos, setStoredTodos] = useLocalStorage<Todo[]>("_Todos", []);
   useEffect(() => setTodos(storedTodos), []);
   useEffect(() => setStoredTodos(todos), [todos]);
+
+  const [client, setClient] = useState(false);
+  useEffect(() => setClient(true), []);
 
   const [storedCompleted, setStoredCompleted] = useLocalStorage<Todo[]>(
     "_CompletedTodos",
