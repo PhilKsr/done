@@ -1,27 +1,14 @@
 import { useState, createContext, useEffect } from "react";
+import useLocalStorage from "../lib/useLocalStorage";
 
 const ThemeContext = createContext<any>("");
 
-import React from "react";
-
-const getInitialTheme = () => {
-  if (typeof window !== "undefined" && window.localStorage) {
-    const storedPrefs = window.localStorage.getItem("color-theme");
-    if (typeof storedPrefs === "string") {
-      return storedPrefs;
-    }
-
-    const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
-    if (userMedia.matches) {
-      return "dark";
-    }
-  }
-
-  return "light";
-};
-
-const ThemeProvider = ({ initialTheme, children }: any) => {
-  const [theme, setTheme] = useState<string>(getInitialTheme);
+const ThemeProvider = ({ children }: any) => {
+  const [theme, setTheme] = useState<string>("light");
+  const [colorTheme, setColorTheme] = useLocalStorage<string>(
+    "color-theme",
+    theme
+  );
 
   const rawSetTheme = (rawTheme: string) => {
     const root = window.document.documentElement;
@@ -30,19 +17,24 @@ const ThemeProvider = ({ initialTheme, children }: any) => {
     root.classList.remove(isDark ? "light" : "dark");
     root.classList.add(rawTheme);
 
-    localStorage.setItem("color-theme", rawTheme);
+    setColorTheme(rawTheme);
   };
 
-  if (initialTheme) {
-    rawSetTheme(initialTheme);
-  }
+  useEffect(() => {
+    const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
+    if (userMedia.matches) {
+      setTheme("dark");
+    } else {
+      setTheme(colorTheme);
+    }
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     rawSetTheme(theme);
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ setTheme, theme }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

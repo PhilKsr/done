@@ -1,17 +1,32 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../components/InputField";
 import TodoList from "../components/TodoList";
 import ModeToggle from "../components/ModeToggle";
 import Background from "../components/Background";
-import { Todo } from "../lib/model";
+import Todo from "../types/Todo";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { ThemeProvider } from "../themes/mode";
+import useLocalStorage from "../lib/useLocalStorage";
 
-const Home: NextPage = () => {
+const Home: any = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
+
+  const [storedTodos, setStoredTodos] = useLocalStorage<Todo[]>("_Todos", []);
+  useEffect(() => setTodos(storedTodos), []);
+  useEffect(() => setStoredTodos(todos), [todos]);
+
+  const [client, setClient] = useState(false);
+  useEffect(() => setClient(true), []);
+
+  const [storedCompleted, setStoredCompleted] = useLocalStorage<Todo[]>(
+    "_CompletedTodos",
+    []
+  );
+  useEffect(() => setCompletedTodos(storedCompleted), []);
+  useEffect(() => setStoredCompleted(completedTodos), [completedTodos]);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,17 +36,20 @@ const Home: NextPage = () => {
     }
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const handleOnDragEnd = (result: DropResult) => {
     const { source, destination } = result;
-    if (!destination) return;
+
+    if (!destination) {
+      return;
+    }
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     )
       return;
-    let add,
-      active = todos,
-      complete = completedTodos;
+    let add;
+    let active = todos;
+    let complete = completedTodos;
 
     if (source.droppableId === "TodosList") {
       add = active[source.index];
@@ -51,25 +69,31 @@ const Home: NextPage = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <ThemeProvider>
-        <Background>
-          <div className='w-full flex flex-col items-center selection:text-orange-400 dark:selection:text-teal-300 '>
-            <h1 className=' text-6xl xl:text-9xl font-bold m-8 xl:m-24 text-slate-700 dark:text-white'>
-              DONE.
-            </h1>
-            <ModeToggle />
-            <InputField todo={todo} setTodo={setTodo} onHandleAdd={handleAdd} />
-            <TodoList
-              todos={todos}
-              onSetTodos={setTodos}
-              completedTodos={completedTodos}
-              onSetCompletedTodos={setCompletedTodos}
-            />
-          </div>
-        </Background>
-      </ThemeProvider>
-    </DragDropContext>
+    client && (
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <ThemeProvider>
+          <Background>
+            <div className='w-full flex flex-col items-center selection:text-orange-400 dark:selection:text-teal-300 '>
+              <h1 className=' text-6xl xl:text-9xl font-bold m-8 xl:m-24 text-slate-700 dark:text-white'>
+                DONE.
+              </h1>
+              <ModeToggle />
+              <InputField
+                todo={todo}
+                setTodo={setTodo}
+                onHandleAdd={handleAdd}
+              />
+              <TodoList
+                todos={todos}
+                onSetTodos={setTodos}
+                completedTodos={completedTodos}
+                onSetCompletedTodos={setCompletedTodos}
+              />
+            </div>
+          </Background>
+        </ThemeProvider>
+      </DragDropContext>
+    )
   );
 };
 
